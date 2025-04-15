@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>5090</title>
+	<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+	<section id="produit">
+		<div class="product-info">
+			<h2>La carte graphique ultime</h2>
+			<p>Profitez de performances exceptionnelles avec la Nvidia 5090, conçue pour les gamers et professionnels exigeants.</p>
+			<img src="https://via.placeholder.com/500x300" alt="Nvidia 5090" class="product-image">
+		</div>
+	</section>
+
+	<section id="acheter" class="cta">
+		<h2>Prêt à acheter ?</h2>
+		<p>Ne manquez pas cette occasion d'obtenir la carte graphique la plus avancée du marché !</p>
+		<a href="javascript:void(0)" id="acheter-btn" class="buy-button">Acheter maintenant</a>
+	</section>
+
+	<!-- Section Inscription -->
+	<section id="inscription" class="hidden">
+		
+		<form id="form-inscription">
+			<div class="form-group">
+				<h2>Formulaire d'inscription</h2>
+				<div class="row1">
+					<input type="text" id="nom" name="nom" required placeholder="Nom">
+					<input type="text" id="prenom" name="prenom" required placeholder="Prenom">
+				</div>
+
+				<div class="row2">
+					<input type="email" id="email" name="email" required placeholder="Email">
+					<input type="tel" id="tel" name="tel" required placeholder="Téléphone">
+					<input type="text" id="adresse" name="adresse" required placeholder="Adresse">
+				</div>
+
+				<div class="row3">
+					<input type="text" id="ville" name="ville" required placeholder="Ville">
+					<input type="text" id="code_postal" name="code_postal" required placeholder="Code Postal">
+				</div>
+				<button type="submit" class="submit-button">S'inscrire</button>
+			</div>
+			
+		</form>
+	</section>
+
+	<script>
+		// Affiche le formulaire à l'ouverture du bouton
+		document.getElementById('acheter-btn').addEventListener('click', function () {
+			document.getElementById('inscription').classList.toggle('hidden');
+		});
+
+		// Soumission du formulaire vers Make
+		document.getElementById('form-inscription').addEventListener('submit', function (e) {
+			e.preventDefault();
+
+			const data = {
+				nom: document.getElementById('nom').value,
+				prenom: document.getElementById('prenom').value,
+				email: document.getElementById('email').value,
+				tel: document.getElementById('tel').value,
+				adresse: document.getElementById('adresse').value,
+				ville: document.getElementById('ville').value,
+				codepostal: document.getElementById('code_postal').value
+			};
+
+			fetch('https://hook.eu2.make.com/pb0ttvuvcg1rk8zhnwfgwnnnt45do7k7', { // 🔁 Remplace par ton vrai webhook Make
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify(data)
+			})
+			.then(response => {
+				if (response.ok) {
+					alert("Inscription envoyée avec succès !");
+					document.getElementById('form-inscription').reset();
+					document.getElementById('inscription').classList.add('hidden');
+				} else {
+					alert("Une erreur est survenue. Veuillez réessayer.");
+				}
+			})
+			.catch(error => {
+				console.error('Erreur Make :', error);
+				alert("Erreur réseau !");
+			});
+		});
+	</script>
+</body>
+</html>
